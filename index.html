@@ -8,52 +8,31 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { width: 100%; height: 100%; overflow: hidden; }
-
     #oracle-wrap {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 100vw; height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       background: #ffffff;
       transition: background 0.9s ease;
       position: relative;
     }
-
     #intro-state {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0; left: 0;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+      position: absolute; top: 0; left: 0;
     }
-
     #heart-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
+      background: none; border: none; cursor: pointer; padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      outline: none; -webkit-tap-highlight-color: transparent;
     }
-
     #heart-btn svg {
-      width: min(60vw, 60vh);
-      height: min(60vw, 60vh);
+      width: min(60vw, 60vh); height: min(60vw, 60vh);
       animation: heartbeat 1.4s ease-in-out infinite;
-      transform-origin: center;
-      display: block;
+      transform-origin: center; display: block;
     }
-
     #heart-btn:hover { opacity: 0.7; }
     #heart-btn:active { transform: scale(0.9); }
-
     @keyframes heartbeat {
       0%   { transform: scale(1); }
       14%  { transform: scale(1.08); }
@@ -62,51 +41,26 @@
       56%  { transform: scale(1); }
       100% { transform: scale(1); }
     }
-
     #word-display {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: 100%;
-      padding-bottom: 48px;
+      display: none; flex-direction: column;
+      align-items: center; justify-content: space-between;
+      width: 100%; height: 100%; padding-bottom: 48px;
     }
-
-    #word-area {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    #word-area { flex: 1; display: flex; align-items: center; justify-content: center; }
     #the-word {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: clamp(48px, 10vw, 100px);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      text-transform: lowercase;
-      line-height: 1;
-      text-align: center;
-      padding: 0 2rem;
+      font-weight: 400; letter-spacing: -0.02em;
+      color: #ffffff; text-transform: lowercase;
+      line-height: 1; text-align: center; padding: 0 2rem;
     }
-
     #again-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
+      background: none; border: none; cursor: pointer; padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      outline: none; -webkit-tap-highlight-color: transparent;
     }
-
     #again-btn:hover { opacity: 0.6; }
     #again-btn:active { transform: scale(0.9); }
-
     @keyframes wordPop {
       0%   { opacity: 0; transform: translateY(12px); }
       100% { opacity: 1; transform: translateY(0); }
@@ -116,7 +70,6 @@
 </head>
 <body>
   <div id="oracle-wrap">
-
     <div id="intro-state">
       <button id="heart-btn" aria-label="Consultar el oráculo">
         <svg viewBox="0 0 100 100" fill="none">
@@ -124,115 +77,9 @@
         </svg>
       </button>
     </div>
-
     <div id="word-display">
       <div id="word-area">
         <p id="the-word"></p>
       </div>
       <button id="again-btn" aria-label="Otra vez">
-        <svg id="heart-again" width="32" height="32" viewBox="0 0 100 100" fill="none">
-          <path d="M50 82 C50 82 12 58 12 34 C12 22 21 14 32 14 C39 14 46 18 50 24 C54 18 61 14 68 14 C79 14 88 22 88 34 C88 58 50 82 50 82Z" fill="#FF3B30"/>
-        </svg>
-      </button>
-    </div>
-
-  </div>
-
-  <script>
-    const words = [
-      "nublado","sueño","tránsito","silencio","tormenta","polvo","eclipse","marea",
-      "vértigo","umbral","niebla","ceniza","laberinto","abismo","espejo","deriva",
-      "eco","vacío","umbra","grieta","bruma","instante","fiebre","penumbra","ruido",
-      "susurro","humo","fricción","fulgor","sedimento","caos","pausa","herida","velo",
-      "corriente","desierto","insomnio","saturno","frío","lluvia","sombra","polén",
-      "arco","quiebre","viento","latido","desvelo","murmullo","centelleo","erosión",
-      "flujo","presión","tenue","opaco","crudo","denso","tenso","áspero","suave",
-      "etéreo","turbio","nítido","poroso","frágil","elástico","volátil","latente",
-      "profundo","lejano","íntimo","extraño","efímero","eterno","fugaz","espiral",
-      "fractura","tensión","equilibrio","caída","ascenso","flotación","hundimiento",
-      "expansión","contracción","apertura","cierre","límite","frontera","horizonte",
-      "cima","valle","glaciar","volcán","páramo","delta","cañón","arrecife",
-      "torbellino","tsunami","avalancha","aurora","crepúsculo","medianoche","amanecer",
-      "solsticio","nadir","cenit","resonancia","frecuencia","onda","pulso","ritmo",
-      "cadencia","estática","señal","cifra","catalizador","reacción","transformación",
-      "mutación","evolución","regresión","transición","ruptura","continuidad",
-      "paradoja","dualidad","polaridad","magnetismo","gravedad","inercia","impulso",
-      "resistencia","desgaste","cristalización","evaporación","condensación","fusión",
-      "síntesis","abstracción","presencia","ausencia","rastro","huella","vestigio",
-      "fósil","espectro","fantasma","reflejo","refracción","absorción","radiación",
-      "iridiscencia","opacidad","transparencia","textura","superficie","densidad",
-      "colapso","derrumbe","depósito","acumulación","dispersión","concentración",
-      "mezcla","filtración","fermentación","oxidación","modulación","emergencia",
-      "entropía","orden","desorden","complejidad","simplicidad","nostalgia","melancolía",
-      "euforia","angustia","calma","delirio","lucidez","asombro","hastío","fuga",
-      "retorno","origen","destino","camino","encrucijada","bifurcación","espera",
-      "urgencia","lentitud","velocidad","detención","desidia","ternura","rabia",
-      "extrañeza","destello","umbría","vórtice","asfalto","escape","choque",
-      "tacto","calor","roce","peso","temblor","hambre","sed","sudor","voz","aliento","piel",
-      "tundra","estuario","meseta","terremoto","erupción","equinoccio","amplitud",
-      "interferencia","código","clave","detonante","materialidad","luminiscencia",
-      "saturación","contraste","volumen","porosidad","permeabilidad","ductilidad",
-      "torsión","flexión","fatiga","difusión","dilución","separación","destilación",
-      "reducción","inhibición","atenuación","inmersión","flotabilidad","neguentropía"
-    ];
-
-    const colors = [
-      "#FF3B30","#FF9500","#FFCC00","#34C759","#00C7BE","#007AFF","#5856D6",
-      "#AF52DE","#FF2D55","#FF6B35","#1DB954","#0099FF","#BF5AF2","#FF375F",
-      "#30D158","#0A84FF","#FF6F00","#C400FF","#00B4D8","#E63946"
-    ];
-
-    const useWhiteHeart = new Set([
-      "#FF3B30","#FF2D55","#FF375F","#E63946","#FF6B35","#FF9500","#FF6F00"
-    ]);
-
-    let lastColor = null, lastWord = null;
-    let usedWords = [];
-
-    const wrap = document.getElementById('oracle-wrap');
-    const heartBtn = document.getElementById('heart-btn');
-    const introState = document.getElementById('intro-state');
-    const wordDisplay = document.getElementById('word-display');
-    const theWord = document.getElementById('the-word');
-    const againBtn = document.getElementById('again-btn');
-    const heartAgainPath = document.querySelector('#heart-again path');
-
-    function pickRandom(arr, exclude) {
-      const opts = arr.filter(x => x !== exclude);
-      return opts[Math.floor(Math.random() * opts.length)];
-    }
-
-    function pickWord() {
-      if (usedWords.length >= words.length) usedWords = [];
-      const available = words.filter(w => !usedWords.includes(w) && w !== lastWord);
-      const word = available[Math.floor(Math.random() * available.length)];
-      usedWords.push(word);
-      return word;
-    }
-
-    function updateHeartColor(color) {
-      heartAgainPath.setAttribute('fill', useWhiteHeart.has(color) ? '#ffffff' : '#FF3B30');
-    }
-
-    function reveal() {
-      const color = pickRandom(colors, lastColor);
-      const word = pickWord();
-      lastColor = color; lastWord = word;
-      wrap.style.background = color;
-      updateHeartColor(color);
-      theWord.classList.remove('word-anim');
-      void theWord.offsetWidth;
-      theWord.textContent = word + '.';
-      theWord.classList.add('word-anim');
-    }
-
-    heartBtn.addEventListener('click', () => {
-      introState.style.display = 'none';
-      wordDisplay.style.display = 'flex';
-      reveal();
-    });
-
-    againBtn.addEventListener('click', reveal);
-  </script>
-</body>
-</html>
+        <svg id="heart-again" width="32" height="32" viewBox
