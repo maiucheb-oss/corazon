@@ -71,7 +71,7 @@
 <body>
   <div id="oracle-wrap">
     <div id="intro-state">
-      <button id="heart-btn" aria-label="Consultar el oráculo">
+      <button id="heart-btn" aria-label="Consultar el oraculo">
         <svg viewBox="0 0 100 100" fill="none">
           <path d="M50 82 C50 82 12 58 12 34 C12 22 21 14 32 14 C39 14 46 18 50 24 C54 18 61 14 68 14 C79 14 88 22 88 34 C88 58 50 82 50 82Z" fill="#FF3B30"/>
         </svg>
@@ -82,4 +82,84 @@
         <p id="the-word"></p>
       </div>
       <button id="again-btn" aria-label="Otra vez">
-        <svg id="heart-again" width="32" height="32" viewBox
+        <svg id="heart-again" width="32" height="32" viewBox="0 0 100 100" fill="none">
+          <path d="M50 82 C50 82 12 58 12 34 C12 22 21 14 32 14 C39 14 46 18 50 24 C54 18 61 14 68 14 C79 14 88 22 88 34 C88 58 50 82 50 82Z" fill="#FF3B30"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <script>
+    var words = [
+      "nublado","sueno","transito","silencio","tormenta","polvo","multicolor",
+      "eclipse","marea","vertigo","umbral","ceniza","laberinto","abismo","vacio",
+      "espejo","eco","grieta","instante","fiebre","penumbra","susurro","sedimento",
+      "velo","corriente","desierto","insomnio","saturno","lluvia","sombra","arco",
+      "latido","desvelo","destello","umbria","vortice","aurora","medianoche",
+      "amanecer","solsticio","espectro","fantasma","reflejo","iridiscencia",
+      "friccion","ruido","caos","quiebre","escape","choque","senal","interferencia",
+      "derrumbe","oxidacion","cuerpo","tacto","calor","temblor","herida","hambre",
+      "frio","sed","sudor","voz","piel","pausa","amor","ternura","nostalgia",
+      "melancolia","euforia","angustia","calma","delirio","lucidez","asombro",
+      "fuga","rabia","extraneza","espera","urgencia","volcan","paramo","delta",
+      "arrecife","tsunami","equinoccio","helado","estuario","meseta","cristalizacion",
+      "cristal","evaporacion","condensacion","paradoja","dualidad","polaridad",
+      "limite","frontera","horizonte","bifurcacion","origen","raiz","destino",
+      "ruptura","continuidad","entropia","orden","desorden","complejidad","tension",
+      "equilibrio","respiro","espiral","fractura","caida","ascenso","flotacion",
+      "expansion","apertura","cierre","transicion","transformacion","mutacion",
+      "descanso","placer","beso","jupiter","ensueno","profecia","bostezo",
+      "templanza","justicia","intuicion","misterio","incertidumbre","desafio",
+      "bendicion","karma","soledad","tradicion","foco","sistema","comienzo",
+      "brillo","lento","ilusion","empatia","claridad","recuerdo","sol","luna",
+      "flexibilidad","suerte","compartir","abrir","cerrar","manifestar"
+    ];
+    var colors = [
+      "#FF3B30","#FF9500","#FFCC00","#34C759","#00C7BE","#007AFF","#5856D6",
+      "#AF52DE","#FF2D55","#FF6B35","#1DB954","#0099FF","#BF5AF2","#FF375F",
+      "#30D158","#0A84FF","#FF6F00","#C400FF","#00B4D8","#E63946"
+    ];
+    var useWhiteHeart = ["#FF3B30","#FF2D55","#FF375F","#E63946","#FF6B35","#FF9500","#FF6F00"];
+    var lastColor = null, lastWord = null, usedWords = [];
+    var wrap = document.getElementById('oracle-wrap');
+    var heartBtn = document.getElementById('heart-btn');
+    var introState = document.getElementById('intro-state');
+    var wordDisplay = document.getElementById('word-display');
+    var theWord = document.getElementById('the-word');
+    var againBtn = document.getElementById('again-btn');
+    var heartAgainPath = document.querySelector('#heart-again path');
+    function pickRandom(arr, exclude) {
+      var opts = arr.filter(function(x){ return x !== exclude; });
+      return opts[Math.floor(Math.random() * opts.length)];
+    }
+    function pickWord() {
+      if (usedWords.length >= words.length) usedWords = [];
+      var available = words.filter(function(w){ return usedWords.indexOf(w) === -1 && w !== lastWord; });
+      var word = available[Math.floor(Math.random() * available.length)];
+      usedWords.push(word);
+      return word;
+    }
+    function updateHeartColor(color) {
+      var fill = useWhiteHeart.indexOf(color) !== -1 ? '#ffffff' : '#FF3B30';
+      heartAgainPath.setAttribute('fill', fill);
+    }
+    function reveal() {
+      var color = pickRandom(colors, lastColor);
+      var word = pickWord();
+      lastColor = color;
+      lastWord = word;
+      wrap.style.background = color;
+      updateHeartColor(color);
+      theWord.classList.remove('word-anim');
+      void theWord.offsetWidth;
+      theWord.textContent = word + '.';
+      theWord.classList.add('word-anim');
+    }
+    heartBtn.addEventListener('click', function() {
+      introState.style.display = 'none';
+      wordDisplay.style.display = 'flex';
+      reveal();
+    });
+    againBtn.addEventListener('click', reveal);
+  </script>
+</body>
+</html>
